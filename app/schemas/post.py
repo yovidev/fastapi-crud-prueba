@@ -1,9 +1,7 @@
 from datetime import datetime
 
-from pydantic import BaseModel, constr
+from pydantic import BaseModel, constr, ConfigDict
 from typing import Optional, List
-from ..schemas.user import User
-from ..schemas.tag import Tag
 
 class PostBase(BaseModel):
     title: constr(min_length=5, max_length=200)
@@ -20,11 +18,10 @@ class PostUpdate(BaseModel):
 class Post(PostBase):
     id: int
     owner_id: int
-    owner: User
-    tags: List[Tag] = []
+    owner: 'User'
+    tags: List['Tag'] = []
     created_at: datetime
     updated_at: datetime
     is_deleted: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)

@@ -1,7 +1,6 @@
-from pydantic import BaseModel, EmailStr, constr
+from pydantic import BaseModel, EmailStr, constr, ConfigDict
 from typing import Optional, List
 from datetime import datetime
-from ..models.entities import Post
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -20,7 +19,6 @@ class User(UserBase):
     created_at: datetime
     updated_at: datetime
     is_deleted: bool
-    posts: List[Post] = []
+    posts: List['Post'] = []
 
-    class Config:
-         from_attributes = True
+    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)

@@ -1,12 +1,9 @@
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from passlib.context import CryptContext
-from ..core.security import get_password_hash
+from ..core.hashing import get_password_hash
 from ..models.entities import User
 from ..schemas.user import UserCreate, UserUpdate
 from ..utils.soft_delete import get_non_deleted
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 async def get_user_by_email(db: AsyncSession, email: str):
     stmt = select(User).where(User.email == email, User.is_deleted == False)
