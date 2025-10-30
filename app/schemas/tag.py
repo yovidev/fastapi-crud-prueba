@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from pydantic import BaseModel, constr, ConfigDict
 from typing import List
 
@@ -11,9 +10,15 @@ class TagCreate(TagBase):
 
 class Tag(TagBase):
     id: int
-    posts: List['Post'] = []
-    create_at: datetime
+    created_at: datetime
     updated_at: datetime
     is_deleted: bool
 
-    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)
+    model_config = ConfigDict(from_attributes=True)
+
+
+class TagWithPosts(Tag):
+    posts: List['Post'] = []
+
+from .post import Post
+TagWithPosts.update_forward_refs()

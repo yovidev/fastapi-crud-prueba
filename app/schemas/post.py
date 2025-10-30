@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from pydantic import BaseModel, constr, ConfigDict
 from typing import Optional, List
 
@@ -18,10 +17,16 @@ class PostUpdate(BaseModel):
 class Post(PostBase):
     id: int
     owner_id: int
-    owner: 'User'
-    tags: List['Tag'] = []
     created_at: datetime
     updated_at: datetime
     is_deleted: bool
 
-    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)
+    model_config = ConfigDict(from_attributes=True)
+
+class PostWithRelations(Post):
+    owner: 'User'
+    tags: List['Tag'] = []
+
+from .user import User
+from .tag import Tag
+PostWithRelations.update_forward_refs()
