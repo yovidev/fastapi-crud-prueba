@@ -10,12 +10,12 @@ import sys
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-# Agregar el directorio raíz del proyecto al path de Python
+
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-# Importar BaseModel y TODOS los modelos explícitamente
+
 from app.models.base import BaseModel
-from app.models.entities import User, Post, Tag  # Importar todos los modelos
+from app.models.entities import User, Post, Tag
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -27,7 +27,6 @@ if config.config_file_name is not None:
     try:
         fileConfig(config.config_file_name)
     except Exception:
-        # Si falla la configuración del logging, continuar sin logging
         pass
 
 # add your model's MetaData object here
@@ -72,7 +71,6 @@ async def run_async_migrations() -> None:
 
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
-    # Para PostgreSQL con asyncpg, usamos el enfoque async
     asyncio.run(run_async_migrations())
 
 
