@@ -11,4 +11,6 @@
 - CRUD /users, /posts, /tags (auth required)
 
 ## Docker
-docker-compose up
+1. docker-compose up -d db  # Spin DB
+2. docker-compose run app alembic upgrade head  # Migraciones
+3. docker-compose up app  # App
